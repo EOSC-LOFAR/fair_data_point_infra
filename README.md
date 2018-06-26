@@ -1,6 +1,6 @@
 
 ## Fair_Data_Point_Infra
-This repository contains the [ansible](https://docs.ansible.com/ansible/latest/index.html) configuration together with the shared data to create  Fair data point server to access the [Lofar](http://www.lofar.org/) Long Term Archive ([LAT](https://lta.lofar.eu/)).
+This repository contains the [ansible](https://docs.ansible.com/ansible/latest/index.html) configuration together with the shared data to create  Fair data point server to access the [Lofar](http://www.lofar.org/) Long Term Archive ([LTA](https://lta.lofar.eu/)).
 
 
 ### Instructions
