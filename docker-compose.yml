@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  fdp:
+    image: nlesc/odex-fairdatapoint:devel
+      ports:
+      - 8080:8080
+
+  virtuoso:
+    image: candygene/docker-virtuoso:dev
+    links:
+      - fdp
+      ports:
+        - 8890:8890
+        - 1111:1111
+          
