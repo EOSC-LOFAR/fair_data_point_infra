@@ -12,7 +12,13 @@
         - ntp
         - apt-transport-https
         - python-pkg-resources
-       
+        - rsync
+        - python-setuptools
+        - python3-setuptools
+
+    - pip:
+        name: docker-py
+
     - name: Docker ppa key
       apt_key: 
         url: https://download.docker.com/linux/ubuntu/gpg
@@ -59,3 +65,52 @@
       ufw:
         rule: allow
         port: 8080
+
+    - copy:
+        src: docker-compose.yml
+        dest: /home/ubuntu/docker-compose.yml
+
+    - name: Copy data
+      synchronize:
+        src: data
+        dest: /home/ubuntu/virtuoso
+
+    - name: copy source sql files
+      synchronize:
+        src: src
+        dest: /home/ubuntu/virtuoso
+
+    - name: Run docker-compose in the host
+      shell: docker-compose up -d
+      args:
+        chdir: /home/ubuntu
+
+    - name: Install sql dependencies
+      shell: docker exec ubuntu_virtuoso_1 bash -l -c isql 1111 dba dba errors=stdout install_pkgs.sql
+      args:
+        chdir: /home/ubuntu/virtuoso/src
+
+    #- name: get rdf
+    #  shell: bash get_rdf.sh /home/ubuntu/virtuoso/data
+    #  args:
+    #    chdir: /home/ubuntu/virtuoso/src
+  
+    - name: decompress the data
+      shell: tar xvzf sgn-ld.tar.gz -C /home/ubuntu/virtuoso/data && mv rdf/* .
+      args:
+        chdir: /home/ubuntu/virtuoso/data
+
+    - name: replace data path
+      shell:  sed -i.org "s:__DATA_DIR__:data:" import_rdf.sql 
+      args: 
+        chdir: /home/ubuntu/virtuoso/src
+
+    - name: Import data
+      shell: docker exec ubuntu_virtuoso_1 bash -l -c isql 1111 dba dba errors=stdout /tmp/share/src/import_rdf.sql
+      args:
+        chdir: /home/ubuntu/virtuoso/src
+
+    - name: Import data
+      shell: docker exec ubuntu_virtuoso_1 bash -l -c isql 1111 dba dba errors=stdout /tmp/share/src/post_install.sql
+      args:
+        chdir: /home/ubuntu/virtuoso/src
