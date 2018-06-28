@@ -91,10 +91,14 @@
     - debug:
         var: output    
 
-    # - name: Install sql dependencies
-    #   shell: docker exec ubuntu_virtuoso_1 bash -c "isql 1111 dba dba errors=stdout /tmp/share/src/install_pkgs.sql"
-    #   args:
-    #     chdir: /home/ubuntu/virtuoso/src
+    - name: Wait for virtuoso listening in port 1111
+      wait_for:
+        host: 0.0.0.0
+        port: 1111
+        delay: 10
+        
+    - name: Install sql dependencies
+      shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout install_pkgs.sql
 
     #- name: get rdf
     #  shell: bash get_rdf.sh /home/ubuntu/virtuoso/data
@@ -111,12 +115,9 @@
     #   args: 
     #     chdir: /home/ubuntu/virtuoso/src
 
-    # - name: Import data
-    #   shell: docker exec ubuntu_virtuoso_1 bash -c isql 1111 dba dba errors=stdout /tmp/share/src/import_rdf.sql
-    #   args:
-    #     chdir: /home/ubuntu/virtuoso/src
+    - name: Import data
+      shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout import_rdf.sql
 
-    # - name: Import data
-    #   shell: docker exec ubuntu_virtuoso_1 bash -c isql 1111 dba dba errors=stdout /tmp/share/src/post_install.sql
-    #   args:
-    #     chdir: /home/ubuntu/virtuoso/src
+    - name: post installation
+      shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout post_install.sql
+
