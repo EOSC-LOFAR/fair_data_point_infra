@@ -2,7 +2,7 @@ version: '3'
 services:
 
   fdp:
-    image: nlesc/odex-fairdatapoint:devel
+    image: nlesc/odex-fairdatapoint:lofar
     ports:
       - 8080:8080
       

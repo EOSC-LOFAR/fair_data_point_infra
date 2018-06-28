@@ -101,15 +101,15 @@
     #  args:
     #    chdir: /home/ubuntu/virtuoso/src
   
-    - name: decompress the data
-      shell: tar xvzf sgn-ld.tar.gz -C /home/ubuntu/virtuoso/data && mv rdf/* .
-      args:
-        chdir: /home/ubuntu/virtuoso/data
+    # - name: decompress the data
+    #   shell: tar xvzf sgn-ld.tar.gz -C /home/ubuntu/virtuoso/data && mv rdf/* .
+    #   args:
+    #     chdir: /home/ubuntu/virtuoso/data
 
-    - name: replace data path
-      shell:  sed -i.org "s:__DATA_DIR__:data:" import_rdf.sql 
-      args: 
-        chdir: /home/ubuntu/virtuoso/src
+    # - name: replace data path
+    #   shell:  sed -i.org "s:__DATA_DIR__:data:" import_rdf.sql 
+    #   args: 
+    #     chdir: /home/ubuntu/virtuoso/src
 
     # - name: Import data
     #   shell: docker exec ubuntu_virtuoso_1 bash -c isql 1111 dba dba errors=stdout /tmp/share/src/import_rdf.sql
