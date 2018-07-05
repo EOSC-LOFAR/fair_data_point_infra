@@ -45,7 +45,7 @@
         groups:
           - docker
 
-    - name: Allow everything and enable UFW
+    - name: Configure firewall
       ufw:
         state: enabled
         policy: allow
@@ -70,12 +70,12 @@
         src: docker-compose.yml
         dest: /home/ubuntu/docker-compose.yml
 
-    - name: Copy data
+    - name: Copy RDF data
       synchronize:
         src: data
         dest: /home/ubuntu/virtuoso
 
-    - name: Copy SQL files
+    - name: Copy PL/SQL scripts
       synchronize:
         src: src
         dest: /home/ubuntu/virtuoso
@@ -91,33 +91,22 @@
     - debug:
         var: output    
 
-    - name: Wait for virtuoso listening in port 1111
+    - name: Wait for Virtuoso listening on port 1111
       wait_for:
         host: 0.0.0.0
         port: 1111
         delay: 10
         
-    - name: Install sql dependencies
+    - name: Install Virtuoso (VAD) packages
       shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout install_pkgs.sql
 
-    #- name: get rdf
-    #  shell: bash get_rdf.sh /home/ubuntu/virtuoso/data
-    #  args:
-    #    chdir: /home/ubuntu/virtuoso/src
-  
-    # - name: decompress the data
-    #   shell: tar xvzf sgn-ld.tar.gz -C /home/ubuntu/virtuoso/data && mv rdf/* .
-    #   args:
-    #     chdir: /home/ubuntu/virtuoso/data
-
-    - name: Set data path
-      shell:  sed -i.org "s:__DATA_DIR__:data:" import_rdf.sql
+    - name: Set data load path
+      shell: sed -i.org "s:__DATA_DIR__:data:" import_rdf.sql
       args:
         chdir: /home/ubuntu/virtuoso/src
 
-    - name: Import data
+    - name: Import RDF data
       shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout import_rdf.sql
 
-    - name: post installation
+    - name: Create full-text index on RDF data
       shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout post_install.sql
-
