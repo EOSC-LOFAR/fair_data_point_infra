@@ -75,7 +75,7 @@
         src: data
         dest: /home/ubuntu/virtuoso
 
-    - name: copy source sql files
+    - name: Copy SQL files
       synchronize:
         src: src
         dest: /home/ubuntu/virtuoso
@@ -110,10 +110,10 @@
     #   args:
     #     chdir: /home/ubuntu/virtuoso/data
 
-    # - name: replace data path
-    #   shell:  sed -i.org "s:__DATA_DIR__:data:" import_rdf.sql 
-    #   args: 
-    #     chdir: /home/ubuntu/virtuoso/src
+    - name: Set data path
+      shell:  sed -i.org "s:__DATA_DIR__:data:" import_rdf.sql
+      args:
+        chdir: /home/ubuntu/virtuoso/src
 
     - name: Import data
       shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout import_rdf.sql
