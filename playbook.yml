@@ -108,5 +108,8 @@
     - name: Import RDF data
       shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout import_rdf.sql
 
+    - name: Sponge RDF metadata from FAIR Data Point
+      shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout fdp_sponge.sql
+
     - name: Create full-text index on RDF data
       shell: docker exec -w /tmp/share/src ubuntu_virtuoso_1 isql 1111 dba dba errors=stdout post_install.sql
