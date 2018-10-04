@@ -1,10 +1,9 @@
 
 # LOFAR Linked Data Platform
 
-This repository contains software services to improve the FAIRness of the [LOFAR](http://www.lofar.org/) [Long Term Archive](https://lta.lofar.eu/) (meta)data using semantic web technologies:
+This repository contains services to improve the FAIRness of the [LOFAR](http://www.lofar.org/) [Long Term Archive](https://lta.lofar.eu/) (meta)data using semantic web technologies:
 
-* [Virtuoso Universal Server](https://virtuoso.openlinksw.com/)
-* code re-used from [pbg-ld](https://www.research-software.nl/software/linked-data-platform-for-plant-breeding-genomics)
+* [Virtuoso Universal Server](https://virtuoso.openlinksw.com/) including the code used for [pbg-ld](https://www.research-software.nl/software/linked-data-platform-for-plant-breeding-genomics)
 * [FAIR Data Point](https://www.research-software.nl/software/fairdatapoint) (FDP)
 
 **1. Clone this git repo.**
@@ -15,17 +14,17 @@ This repository contains software services to improve the FAIRness of the [LOFAR
 
 `pip install ansible`
 
-**3. Add the target machine (host) to the `inventory` file.**
+**3. Deploy services.**
 
-**4. Run Ansible playbook to deploy the services.**
+`ansible-playbook -i inventory playbook.yml` # on a remote host specified in the 'inventory' file
 
-`ansible-playbook -i inventory playbook.yml`
+`cd src && make` # or locally
 
-**5. [Login](http://lofar-ld.lofarpipelines-astron.surf-hosted.nl:8890/conductor) to running Virtuoso instance for admin tasks.**
+**4. [Login](http://localhost:8890/conductor) to running Virtuoso instance for admin tasks.**
 
 Use `dba` for both account name and password.
 
-**6. Run queries via Virtuoso [SPARQL endpoint](http://lofar-ld.lofarpipelines-astron.surf-hosted.nl:8890/sparql) or browse data via [Faceted Browser](http://lofar-ld.lofarpipelines-astron.surf-hosted.nl:8890/fct/) (no login required).**
+**5. Run queries via Virtuoso [SPARQL endpoint](http://localhost:8890/sparql) or browse data via [Faceted Browser](http://localhost:8890/fct/) (no login required).**
 
 RDF graphs:IRIs (_A-Box_)
  * (subset of) LOFAR DBView: `https://lta-dbview.lofar.eu/`

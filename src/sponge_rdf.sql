@@ -4,6 +4,7 @@ SPARQL
 define get:soft "soft"
 define get:method "GET"
 SELECT *
+FROM <http://dbpedia.org/resource/LOFAR>
 FROM <$u{FDP_URI}/fdp>
 FROM <$u{FDP_URI}/catalog/astron-01>
 FROM <$u{FDP_URI}/dataset/lofar-lta-dbview>
