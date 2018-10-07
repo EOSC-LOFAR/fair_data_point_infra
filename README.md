@@ -18,7 +18,7 @@ This repository contains services to improve the FAIRness of the [LOFAR](http://
 
 `ansible-playbook -i inventory playbook.yml` # on a remote host specified in the 'inventory' file
 
-`cd src && make` # or locally
+`make -C src` # or locally
 
 **4. [Login](http://localhost:8890/conductor) to running Virtuoso instance for admin tasks.**
 

@@ -8,24 +8,25 @@ VOS_IMAGE = candygene/docker-virtuoso
 FDP_NAME = fdp
 FDP_IMAGE = nlesc/odex-fairdatapoint:lofar
 DATA_DIR = data
+SRC_DIR = src
 
 .PHONY:
-		all
-		pull-vos-image
-		pull-fdp-image
-		pull-images
-		start-vos-srv
-		start-fdp-srv
-		show-containers
-		sleep
-		start-srv
-		rm-vos-srv
-		rm-fdp-srv
-		rm-images
-		install-pkgs
-		import-rdf
-		post-install
-		clean
+	all
+	pull-vos-image
+	pull-fdp-image
+	pull-images
+	start-vos-srv
+	start-fdp-srv
+	show-containers
+	sleep
+	start-srv
+	rm-vos-srv
+	rm-fdp-srv
+	rm-images
+	install-pkgs
+	import-rdf
+	post-install
+	clean
 
 all: pull-images start-srv install-pkgs import-rdf post-install
 
@@ -63,14 +64,14 @@ rm-images:
 	docker system prune -f -a
 
 install-pkgs:
-	docker exec $(VOS_NAME) $(VOS_EXE) install_pkgs.sql
+	docker exec $(VOS_NAME) $(VOS_EXE) $(SRC_DIR)/install_pkgs.sql
 
 import-rdf:
 	sed -i.org "s:__DATA_DIR__:$(DATA_DIR):" import_rdf.sql
-	docker exec $(VOS_NAME) $(VOS_EXE) import_rdf.sql
-	docker exec $(VOS_NAME) $(VOS_EXE) sponge_rdf.sql
+	docker exec $(VOS_NAME) $(VOS_EXE) $(SRC_DIR)/import_rdf.sql
+	docker exec $(VOS_NAME) $(VOS_EXE) $(SRC_DIR)/sponge_rdf.sql
 
 post-install:
-	docker exec $(VOS_NAME) $(VOS_EXE) post_install.sql
+	docker exec $(VOS_NAME) $(VOS_EXE) $(SRC_DIR)/post_install.sql
 
 clean: rm-srv rm-images
