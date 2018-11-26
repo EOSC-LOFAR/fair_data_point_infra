@@ -1,9 +1,12 @@
+[![DOI](https://zenodo.org/badge/138730107.svg)](https://zenodo.org/badge/latestdoi/138730107)
+![Website](https://img.shields.io/website-up-down-green-red/http/lofar-ld.lofarpipelines-astron.surf-hosted.nl:8080.svg?label=fdp)
+![Website](https://img.shields.io/website-up-down-green-red/http/lofar-ld.lofarpipelines-astron.surf-hosted.nl:8890.svg?label=virtuoso)
 
 # LOFAR Linked Data Platform
 
 This repository contains services to improve the FAIRness of the [LOFAR](http://www.lofar.org/) [Long Term Archive](https://lta.lofar.eu/) (meta)data using semantic web technologies:
 
-* [Virtuoso Universal Server](https://virtuoso.openlinksw.com/) including the code used for [pbg-ld](https://www.research-software.nl/software/linked-data-platform-for-plant-breeding-genomics)
+* [Virtuoso Universal Server](https://virtuoso.openlinksw.com/) (including some code from [pbg-ld](https://www.research-software.nl/software/linked-data-platform-for-plant-breeding-genomics))
 * [FAIR Data Point](https://www.research-software.nl/software/fairdatapoint) (FDP)
 
 **1. Clone this git repo.**
